@@ -5,7 +5,7 @@
  *
  */
 
-use App\Board\\Classes\exceptions\ErrorRenderer;
+use App\Board\Classes\exceptions\ErrorRenderer;
 
 /**
  * ルーティング ミドルウェアは、ErrorMiddleware よりも前に追加する必要があります。

@@ -7,19 +7,19 @@
  * フォルダ=/ph35/scottadminslim/classes/controllers/
  */
 
-namespace App\Board\\Classes\controllers;
+namespace App\Board\Classes\controllers;
 
 use PDO;
 use PDOException;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
-use App\Board\\Classes\Conf;
-use App\Board\\Classes\exceptions\DataAccessException;
-use App\Board\\Classes\entities\Report;
-use App\Board\\Classes\daos\ReportDAO;
-use App\Board\\Classes\daos\ReportcateDAO;
-use App\Board\\Classes\daos\UserDAO;
-use App\Board\\Classes\controllers\ParentController;
+use App\Board\Classes\Conf;
+use App\Board\Classes\exceptions\DataAccessException;
+use App\Board\Classes\entities\Report;
+use App\Board\Classes\daos\ReportDAO;
+use App\Board\Classes\daos\ReportcateDAO;
+use App\Board\Classes\daos\UserDAO;
+use App\Board\Classes\controllers\ParentController;
 
 /**
  * 部門情報管理に関するコントローラクラス。
@@ -46,7 +46,7 @@ class ReportController extends ParentController
       $assign["reportList"] = $reportList;
       // join
       $dist = $reportDAO->findJoin();
-      var_dump($dist);
+      // var_dump($dist);
 
       // ユーザ一覧
       $userDAO = new UserDAO($db);

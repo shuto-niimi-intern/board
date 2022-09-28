@@ -4,17 +4,16 @@
  * @author Shinzo SAITO
  */
 
-namespace App\Board\\Classes\controllers;
+namespace App\Board\Classes\controllers;
 
 use PDO;
 use PDOException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use App\Board\\Classes\Conf;
-use App\Board\\Classes\exceptions\DataAccessException;
-use App\Board\\Classes\daos\UserDAO;
-use App\Board\\Classes\entities\User;
-use App\Board\\Classes\controllers\ParentController;
+use App\Board\Classes\exceptions\DataAccessException;
+use App\Board\Classes\daos\UserDAO;
+use App\Board\Classes\controllers\ParentController;
+use App\Board\Classes\Conf;
 
 /**
  * ログイン・ログアウトに関するコントローラクラス。
@@ -53,7 +52,9 @@ class LoginController extends ParentController
     $validationMsgs = [];
     if (empty($validationMsgs)) {
       try {
-        $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+        // $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+        $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
+
         $userDAO = new UserDAO($db);
         $user = $userDAO->findByUsMail($loginId);
 

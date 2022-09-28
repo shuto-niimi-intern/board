@@ -3,17 +3,15 @@
 /**
  * ReportのDAO
  * @author Syuto Niimi
- * name=ReportDAO.php
- * dir=
  */
 
-namespace App\Board\\Classes\daos;
+namespace App\Board\Classes\daos;
 
 use Countable;
 use PDO;
-use App\Board\\Classes\entities\Report;
-use App\Board\\Classes\entities\User;
-use App\Board\\Classes\entities\Reportcate;
+use App\Board\Classes\entities\Report;
+use App\Board\Classes\entities\User;
+use App\Board\Classes\entities\Reportcate;
 
 
 class ReportDAO
@@ -25,7 +23,6 @@ class ReportDAO
 
   /**
    * コンストラクタ
-   *
    * @param PDO $db DB接続オブジェクト
    */
   public function __construct(PDO $db)

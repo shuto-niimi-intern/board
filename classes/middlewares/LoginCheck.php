@@ -4,7 +4,7 @@
  * @author
  */
 
-namespace App\Board\\Classes\middlewares;
+namespace App\Board\Classes\middlewares;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;

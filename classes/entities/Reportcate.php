@@ -7,7 +7,7 @@
  * dir=ph35/sharereports/classes/entities/
  */
 
-namespace App\Board\\Classes\entities;
+namespace App\Board\Classes\entities;
 
 class Reportcate
 {

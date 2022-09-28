@@ -10,6 +10,8 @@ $app = AppFactory::create();
 
 // add setting
 // require_once __DIR__ . '/../src/setting.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 // Add error middleware
 require_once __DIR__ . '/../middleware.php';
 // Add route

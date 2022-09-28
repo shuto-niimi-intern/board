@@ -1,10 +1,17 @@
 <?php
 
-use App\Board\\Classes\middlewares\LoginCheck;
-use App\Board\\Classes\controllers\ReportController;
-use App\Board\\Classes\controllers\LoginController;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Board\Classes\middlewares\LoginCheck;
+use App\Board\Classes\controllers\ReportController;
+use App\Board\Classes\controllers\LoginController;
 
 // ログイン画面表示処理
+$app->get("/test", function (Request $request, Response $response, $args) {
+  $response->getBody()->write($_ENV['host']);
+  return $response;
+});
+
 $app->get("/", LoginController::class . ":goLogin");
 $app->post("/login", LoginController::class . ":login");
 $app->get("/logout", LoginController::class . ":logout");

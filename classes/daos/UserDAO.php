@@ -7,10 +7,10 @@
  * dir=
  */
 
-namespace App\Board\\Classes\daos;
+namespace App\Board\Classes\daos;
 
 use PDO;
-use App\Board\\Classes\entities\User;
+use App\Board\Classes\entities\User;
 
 class UserDAO
 {

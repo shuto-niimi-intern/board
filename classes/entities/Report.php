@@ -8,7 +8,7 @@
  * dir=/ph35/sharereorts
  */
 
-namespace App\Board\\Classes\entities;
+namespace App\Board\Classes\entities;
 
 class Report
 {

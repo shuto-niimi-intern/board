@@ -52,7 +52,6 @@ class LoginController extends ParentController
     $validationMsgs = [];
     if (empty($validationMsgs)) {
       try {
-        // $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
         $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
 
         $userDAO = new UserDAO($db);

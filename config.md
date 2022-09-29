@@ -13,7 +13,7 @@
 - composer dump-autoload
 - "Slim\\Board\\Classes\\": "classes/"などベンダーパッケージフォルダと同じ名前つけるとベンダー読み込まれないので注意
 
-### setting
+### setting(使用断念)
 - アプリケーションの設定を記述するファイルです。
 - エラー表示の有無や、テンプレートやログの配置をここで設定しています。
 - 任意のキーでユーザー独自の設定も作れます。
@@ -32,3 +32,21 @@ $settings  = $container->get('settings');
 
 ### phpDotEnvの設定
 - vlucas/phpdotenv
+- class内に定数としてグローバル変数の$_ENVを指定できない
+- slim3ではappのインスタンス生成時にsettingでテンプレパス、ロギング、環境変数を与えて生成していた
+- slim4不明
+
+### slim/string-extra(truncate)の設定
+- 文字数over...の...をつけたい人向け
+- parentControllerで
+- use Twig\Extra\String\StringExtension;
+- $this->view->addExtension(new StringExtension);
+
+### databaseの作成
+- CREATE DATABASE けいじばん CHARACTER SET utf8;
+- CREATE USER IF NOT EXISTS ゆ～ざ@localhost IDENTIFIED BY 'ゆ～ざぱすわ～ど'
+- [GRANT ALL PRIVILEGES ON board.*TO admin@localhost;](https://qiita.com/ritukiii/items/afdc91e68d0cf3e0f383)
+- mysql -u ゆーざ -p board --default-character-set=utf8 < " seed.sql
+
+### SQL 結合などしてマシなSQL文に変える
+

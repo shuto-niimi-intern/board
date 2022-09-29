@@ -39,15 +39,11 @@ class ReportController extends ParentController
     $this->cleanSession();
     // 各情報取得
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       // レポート一覧
       $reportDAO = new ReportDAO($db);
       $reportList = $reportDAO->findAll();
       $assign["reportList"] = $reportList;
-      // join
-      $dist = $reportDAO->findJoin();
-      // var_dump($dist);
-
       // ユーザ一覧
       $userDAO = new UserDAO($db);
       $userList = $userDAO->findAll();
@@ -92,7 +88,7 @@ class ReportController extends ParentController
     $this->cleanSession();
 
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       // レポート情報
       $reportDAO = new reportDAO($db);
       $report = $reportDAO->findByReportId($reportId);
@@ -138,7 +134,7 @@ class ReportController extends ParentController
     $assign = [];
 
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       // レポート詳細カラムを取得
       $reportcateDAO = new ReportcateDAO($db);
       $assign['reportcates'] = $reportcateDAO->findAll();
@@ -190,7 +186,7 @@ class ReportController extends ParentController
     }
 
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       $reportDAO = new reportDAO($db);
       if (empty($validationMsgs)) {
         $dpId = $reportDAO->insert($report);
@@ -238,7 +234,7 @@ class ReportController extends ParentController
     $assign = [];
     $editReportId = $args["id"];
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       // レポート情報
       $reportDAO = new reportDAO($db);
       $report = $reportDAO->findByReportId($editReportId);
@@ -301,7 +297,7 @@ class ReportController extends ParentController
 
     $flag = false;
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       $reportDAO = new reportDAO($db);
       if (empty($validationMsgs)) {
         $result = $reportDAO->update($report);
@@ -355,7 +351,7 @@ class ReportController extends ParentController
 
     $reportId = $args["id"];
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       $reportDAO = new reportDAO($db);
       $report = $reportDAO->findByReportId($reportId);
       if (empty($report)) {
@@ -382,7 +378,7 @@ class ReportController extends ParentController
   $response, array $args): ResponseInterface
   {
     try {
-      $db = new PDO(Conf::DB_DNS, Conf::DB_USERNAME, Conf::DB_PASSWORD);
+      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
       $reportDAO = new reportDAO($db);
       $result = $reportDAO->delete($args['id']);
       if ($result) {

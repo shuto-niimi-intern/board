@@ -1,15 +1,12 @@
--- PH35 課題6 サポートファイル
 --
 -- テーブル作成、データ登録SQLファイル
--- sharerepousrユーザで使用
--- コマンド: mysql -u sharerepousr -p sharerepo --default-character-set=utf8 < "/…/2022PH35Asgmt06-dbinit.sql"
+-- adminユーザで使用
+-- コマンド: mysql -u  -p board --default-character-set=utf8 < "/…/database.sql"
 --
--- @author Shinzo SAITO
+-- @author Syuto Niimi
 
 -- テーブル削除
-DROP TABLE IF EXISTS reports;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS reportcates;
 
 -- ユーザ
 CREATE TABLE users

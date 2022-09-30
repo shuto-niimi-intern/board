@@ -1,0 +1,42 @@
+{#
+ /**
+  * @author Syuto Niimi
+ */
+  #}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Syuto Niimi">
+    <title>ハンドルネーム編集</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+  </head>
+  <body>
+    <header>
+      <h1>ハンドルネーム編集</h1>
+      <p><span>{{ session.name }}さんこんにちは</span><a href="/logout">ログアウト</a></p>
+    </header>
+    <nav id="breadcrumbs">
+      <ul>
+        <li><a href="/user/showProfile">プロフィール</a></li>
+        <li>ハンドルネーム</li>
+      </ul>
+    </nav> {% if validationMsgs %} <section id="errorMsg">
+      <p>以下のメッセージをご確認ください。</p>
+      <ul> {% for msg in validationMsgs %} <li>{{msg}}</li> {% endfor %} </ul>
+    </section> {% endif %} <section>
+      <p> 情報を入力し、登録ボタンをクリックしてください。 </p>
+      <form action="/user/edit" method="post" class="box"> {# RequestMethod && csrf #} <input type="hidden"
+          name="_METHOD" value="PUT" />
+        <label for="editName">ハンドルネーム<span class="required">必須</span>
+          <input type="text" id="editName" name="editName" value="{{user.name}}" required>
+        </label>
+        <label for="editPass">PASS<span class="required">必須</span>
+          <input type="text" id="editPass" name="editPass" value="{{user.password}}" required>
+        </label>
+        <button type="submit">更新</button>
+      </form>
+    </section>
+  </body>
+</html>

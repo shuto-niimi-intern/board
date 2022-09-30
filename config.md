@@ -47,6 +47,25 @@ $settings  = $container->get('settings');
 - CREATE USER IF NOT EXISTS ゆ～ざ@localhost IDENTIFIED BY 'ゆ～ざぱすわ～ど'
 - [GRANT ALL PRIVILEGES ON board.*TO admin@localhost;](https://qiita.com/ritukiii/items/afdc91e68d0cf3e0f383)
 - mysql -u ゆーざ -p board --default-character-set=utf8 < " seed.sql
+- 更新、登録日不具合とかlog見る予定ないので消す
 
-### SQL 結合などしてマシなSQL文に変える
+### SQLException 表示
+```php
+  echo $ex->getMessage() . " - " . $ex->getLine() . PHP_EOL;
+```
 
+### リクエストメソッド
+- post 新規登録 put 更新 patch js一部更新
+- [htmlにはput etc..がない為、リクエストメソッドを上書きする](https://www.slimframework.com/docs/v2/routing/put.html)
+- [メソッドオーバライドミドルウェアが必要](https://www.slimframework.com/docs/v4/middleware/method-overriding.html)
+
+### csrf
+
+### SQL 結合などしてマシなSQL文に変える viewクラスを作成する
+
+### バリデーションのmvc扱い分からん
+### $args $request->getParsedBody()違い
+- get or POST/PUT/PATCH etc..
+### インジェクション系
+- SQLインジェクション → bindValue()
+-

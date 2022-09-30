@@ -2,65 +2,80 @@
 
 /**
  * レポートエンティティクラス
- * @auther Syuto Niimi
- * name=Report.php
- * dir=ph35/sharereports/classes/entities/
+ * @author Syuto Niimi
  */
 
 namespace App\Board\Classes\entities;
 
 class User
 {
-  // 主キーのid
-  private ?int $id = null;
-  // メールアドレス
-  private ?string $usMail = "";
-  // 名前
-  private ?string $usName = "";
-  // パスワード
-  private ?string $usPassword = "";
-  // 権限 0=期限切れ,1=管理者,2=一般
-  private ?int $usAuth = null;
+  //********************* プロパティ **************************
+  /**
+   * ユーザID兼ログインID
+   * IDは英単語5文字とする
+   * wordleで鍛えられた英単語力で登録頑張れ
+   * @var string
+   */
+  protected ?string $id = "";
+  /**
+   * ハンドルネーム
+   * 初期値はマツコ・デラックスとする
+   * 一応変えれるようにした
+   * 面白い名前で頼む
+   * @var string
+   */
+  protected ?string $name = "";
+  /**
+   * パスワード
+   * ご自由に 空文字は駄目
+   * @var string
+   */
+  protected ?string $password = "";
+  /**
+   * 権限
+   * 基本権限 0=管理者,1=一般 権限の範囲はまだ決めてない
+   * ユースケースに記述してまた書く
+   * アカウント削除する場合復活させる気はないので
+   * 削除日とかフラグをつける気はない
+   * @var integer
+   */
+  protected ?int $auth = 1;
 
-  // アクセサメソッド
-  public function getId(): ?int
+  //********************* コンストラクタ **************************
+  /**
+   * セッター
+   *
+   * @param string $id
+   * @param string $name // SQLでDEFAULT設定してるけど..分からん
+   * @param string $password
+   * @param integer $auth
+   */
+  public function __construct(string $id, string $name = "マツコ・デラックス", string $password, int $auth = 1)
+  {
+    $this->id = $id;
+    $this->name = $name;
+    $this->password = $password;
+    $this->auth = $auth;
+  }
+
+  /**
+   * ゲッター
+   * @return integer
+   */
+  public function getId(): ?string
   {
     return $this->id;
   }
-  public function setId(int $id): void
+  public function getName(): ?string
   {
-    $this->id = $id;
+    return $this->name;
   }
-  public function getUsMail(): ?string
+  public function getPassword(): ?string
   {
-    return $this->usMail;
+    return $this->password;
   }
-  public function setUsMail(string $usMail): void
+  public function getAuth(): ?int
   {
-    $this->usMail = $usMail;
-  }
-  public function getUsName(): ?string
-  {
-    return $this->usName;
-  }
-  public function setUsName(string $usName): void
-  {
-    $this->usName = $usName;
-  }
-  public function getUsPassword(): ?string
-  {
-    return $this->usPassword;
-  }
-  public function setUsPassword(string $usPassword): void
-  {
-    $this->usPassword = $usPassword;
-  }
-  public function getUsAuth(): ?int
-  {
-    return $this->usAuth;
-  }
-  public function setUsAuth(int $usAuth): void
-  {
-    $this->usAuth = $usAuth;
+    return (int)$this->auth;
   }
 }

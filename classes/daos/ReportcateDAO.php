@@ -88,10 +88,10 @@ class ReportcateDAO
     $sqlInsert = "INSERT INTO Reportcates (rc_name,rc_note,rc_list_flg,
 rc_order) VALUES(:rc_name,:rc_note,:rc_list_flg,:rc_order)";
     $stmt = $this->db->prepare($sqlInsert);
-    $stmt->bindvalue('rc_name', $Reportcate->getRcName(), PDO::PARAM_STR);
-    $stmt->bindvalue('rc_note', $Reportcate->getRcNote(), PDO::PARAM_STR);
-    $stmt->bindvalue('rc_list_flg', $Reportcate->getRcListFlg(), PDO::PARAM_INT);
-    $stmt->bindvalue('rc_order', $Reportcate->getRcOrder(), PDO::PARAM_INT);
+    $stmt->bindValue('rc_name', $Reportcate->getRcName(), PDO::PARAM_STR);
+    $stmt->bindValue('rc_note', $Reportcate->getRcNote(), PDO::PARAM_STR);
+    $stmt->bindValue('rc_list_flg', $Reportcate->getRcListFlg(), PDO::PARAM_INT);
+    $stmt->bindValue('rc_order', $Reportcate->getRcOrder(), PDO::PARAM_INT);
     $result = $stmt->execute();
     if ($result) {
       $ReportcateId = $this->db->lastInsertId();
@@ -109,10 +109,10 @@ rc_order) VALUES(:rc_name,:rc_note,:rc_list_flg,:rc_order)";
   {
     $sqlUpdate = " UPDATE Reportcates SET rc_name = :rc_name, rc_note = :rc_note,rc_list_flg = :rc_list_flg, rc_order = :rc_order WHERE id = :id";
     $stmt = $this->db->prepare($sqlUpdate);
-    $stmt->bindvalue('rc_name', $Reportcate->getRcName(), PDO::PARAM_STR);
-    $stmt->bindvalue('rc_note', $Reportcate->getRcNote(), PDO::PARAM_STR);
-    $stmt->bindvalue('rc_list_flg', $Reportcate->getRcListFlg(), PDO::PARAM_INT);
-    $stmt->bindvalue('rc_order', $Reportcate->getRcOrder(), PDO::PARAM_INT);
+    $stmt->bindValue('rc_name', $Reportcate->getRcName(), PDO::PARAM_STR);
+    $stmt->bindValue('rc_note', $Reportcate->getRcNote(), PDO::PARAM_STR);
+    $stmt->bindValue('rc_list_flg', $Reportcate->getRcListFlg(), PDO::PARAM_INT);
+    $stmt->bindValue('rc_order', $Reportcate->getRcOrder(), PDO::PARAM_INT);
     $result = $stmt->execute();
     return $result;
   }

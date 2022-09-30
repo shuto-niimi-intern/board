@@ -13,7 +13,6 @@ use PDO;
 use PDOException;
 use Psr\Http\Message\ServerRequestInterface as ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface as ResponseInterface;
-use App\Board\Classes\Conf;
 use App\Board\Classes\exceptions\DataAccessException;
 use App\Board\Classes\entities\Report;
 use App\Board\Classes\daos\ReportDAO;

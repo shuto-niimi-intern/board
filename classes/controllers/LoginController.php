@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Shinzo SAITO
+ * @author Syuto Niimi
  */
 
 namespace App\Board\Classes\controllers;
@@ -13,7 +13,6 @@ use Psr\Http\Message\ResponseInterface;
 use App\Board\Classes\exceptions\DataAccessException;
 use App\Board\Classes\daos\UserDAO;
 use App\Board\Classes\controllers\ParentController;
-use App\Board\Classes\Conf;
 
 /**
  * ログイン・ログアウトに関するコントローラクラス。
@@ -38,39 +37,46 @@ class LoginController extends ParentController
     ResponseInterface $response,
     array $args
   ): ResponseInterface {
+
     $isRedirect = false;
     $templatePath = "login.html";
     $assign = [];
-
+    /**
+     * リクエスト受け取り
+     */
     $postParams = $request->getParsedBody();
     $loginId = $postParams["loginId"];
     $loginPw = $postParams["loginPw"];
-
     $loginId = trim($loginId);
     $loginPw = trim($loginPw);
-
+    /**
+     * バリデーション
+     */
     $validationMsgs = [];
+    if (mb_strlen($loginId) !== 5 || !ctype_alpha($loginId)) {
+      $validationMsgs[] = 'IDは英語の5文字で設定してください';
+    }
+    /**
+     * クエリ
+     */
     if (empty($validationMsgs)) {
       try {
         $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
 
         $userDAO = new UserDAO($db);
-        $user = $userDAO->findByUsMail($loginId);
+        $user = $userDAO->findByUserId($loginId);
 
         if ($user == null) {
           $validationMsgs[] = "存在しないIDです。正しいIDを入力してください。";
         } else {
-          $userPw = $user->getUsPassword();
-          if (password_verify($loginPw, $userPw)) {
+          if ($loginPw === $user->getPassword()) {
             $id = $user->getId();
-            $name = $user->getUsName();
-            $mail = $user->getUsMail();
-            $auth = $user->getUsAuth();
+            $name = $user->getName();
+            $auth = $user->getAuth();
 
             $_SESSION["loginFlg"] = true;
             $_SESSION["id"] = $id;
             $_SESSION["name"] = $name;
-            $_SESSION["mail"] = $mail;
             $_SESSION["auth"] = $auth; // 権限
             $isRedirect = true;
           } else {

@@ -1,0 +1,40 @@
+{#
+ /**
+  * @author Syuto Niimi
+ */
+  #}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Shinzo SAITO">
+    <title>ユーザー追加 | user</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+  </head>
+  <body>
+    <header>
+      <h1>ユーザー情報登録</h1>
+    </header>
+    <nav id="breadcrumbs">
+      <ul>
+        <li><a href="/">TOP</a></li>
+        <li>ユーザー情報追加</li>
+      </ul>
+    </nav> {% if validationMsgs %} <section id="errorMsg">
+      <p>以下のメッセージをご確認ください。</p>
+      <ul> {% for msg in validationMsgs %} <li>{{msg}}</li> {% endfor %} </ul>
+    </section> {% endif %} <section>
+      <p> 情報を入力し、登録ボタンをクリックしてください。 </p>
+      <form action="/user/add" method="post" class="box">
+        <label for="addId"> ID <span class="required">必須</span>
+          <input type="text" id="addId" name="addId" value="{{addId}}" max="5" required>
+        </label>
+        <label for="addPass"> PASS<span class="required">必須</span>
+          <input type="text" id="addPass" name="addPass" value="{{addPass}}" required>
+        </label>
+        <button type="submit">登録</button>
+      </form>
+    </section>
+  </body>
+</html>

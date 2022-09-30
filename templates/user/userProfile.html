@@ -1,0 +1,62 @@
+{#
+ /**
+  * @author Syuto Niimi
+ */
+#}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Board">
+    <title>ユーザー詳細</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <style>
+      table {
+        writing-mode: vertical-lr;
+      }
+
+      table th,
+      table td {
+        writing-mode: horizontal-tb;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>ユーザー詳細</h1>
+      <p><span>{{ session.name }}さんこんにちは</span><a href="/logout">ログアウト</a></p>
+    </header>
+    <nav id="breadcrumbs">
+      <ul>
+        <li><a href="/board/top">掲示板TOP</a></li>
+        <li>ユーザー詳細</li>
+      </ul>
+    </nav> {% if flashMsg %} <section id="flashMsg">
+      <p>{{flashMsg}}</p>
+    </section> {% endif %} <section>
+      <table>
+        <thead>
+          <tr>
+            <th>ログインID</th>
+            <th>ハンドルネーム</th>
+            <th colspan="2">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{session.id}}</td>
+            <td>{{session.name}}</td>
+            <td>
+              <a href="/user/prepareEdit">編集</a>
+            </td>
+            <td>
+              <a href="/user/confirmDelete">削除</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

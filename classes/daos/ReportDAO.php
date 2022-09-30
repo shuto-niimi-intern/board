@@ -121,12 +121,12 @@ class ReportDAO
   {
     $sqlInsert = "INSERT INTO reports (rp_date,rp_time_from,rp_time_to,rp_content,rp_created_at,reportcate_id,user_id) VALUES(:rp_date,:rp_time_from,:rp_time_to,:rp_content, NOW(),:reportcate_id,:user_id)";
     $stmt = $this->db->prepare($sqlInsert);
-    $stmt->bindvalue(':rp_date', $report->getRpDate(), PDO::PARAM_STR);
-    $stmt->bindvalue(':rp_time_from', $report->getRpTimeFrom(), PDO::PARAM_STR);
-    $stmt->bindvalue(':rp_time_to', $report->getRpTimeTo(), PDO::PARAM_STR);
-    $stmt->bindvalue(':rp_content', $report->getRpContent(), PDO::PARAM_STR);
-    $stmt->bindvalue(':reportcate_id', (int)$report->getReportcateId(), PDO::PARAM_INT);
-    $stmt->bindvalue(':user_id', (int)$report->getUserId(), PDO::PARAM_INT);
+    $stmt->bindValue(':rp_date', $report->getRpDate(), PDO::PARAM_STR);
+    $stmt->bindValue(':rp_time_from', $report->getRpTimeFrom(), PDO::PARAM_STR);
+    $stmt->bindValue(':rp_time_to', $report->getRpTimeTo(), PDO::PARAM_STR);
+    $stmt->bindValue(':rp_content', $report->getRpContent(), PDO::PARAM_STR);
+    $stmt->bindValue(':reportcate_id', (int)$report->getReportcateId(), PDO::PARAM_INT);
+    $stmt->bindValue(':user_id', (int)$report->getUserId(), PDO::PARAM_INT);
 
     $result = $stmt->execute();
     if ($result) {
@@ -145,13 +145,13 @@ class ReportDAO
   {
     $sqlUpdate = " UPDATE reports SET rp_date = :rp_date , rp_time_from = :rp_time_from ,rp_time_to = :rp_time_to , rp_content = :rp_content , rp_created_at = NOW() , reportcate_id = :reportcate_id , user_id = :user_id WHERE id = :id";
     $stmt = $this->db->prepare($sqlUpdate);
-    $stmt->bindvalue(':rp_date', $report->getRpDate(), PDO::PARAM_STR);
-    $stmt->bindvalue(':rp_time_from', $report->getRpTimeFrom(), PDO::PARAM_STR);
-    $stmt->bindvalue(':rp_time_to', $report->getRpTimeTo(), PDO::PARAM_STR);
-    $stmt->bindvalue(':rp_content', $report->getRpContent(), PDO::PARAM_STR);
-    $stmt->bindvalue(':reportcate_id', $report->getReportcateId(), PDO::PARAM_INT);
-    $stmt->bindvalue(':user_id', $report->getUserId(), PDO::PARAM_INT);
-    $stmt->bindvalue(':id', $report->getId(), PDO::PARAM_INT);
+    $stmt->bindValue(':rp_date', $report->getRpDate(), PDO::PARAM_STR);
+    $stmt->bindValue(':rp_time_from', $report->getRpTimeFrom(), PDO::PARAM_STR);
+    $stmt->bindValue(':rp_time_to', $report->getRpTimeTo(), PDO::PARAM_STR);
+    $stmt->bindValue(':rp_content', $report->getRpContent(), PDO::PARAM_STR);
+    $stmt->bindValue(':reportcate_id', $report->getReportcateId(), PDO::PARAM_INT);
+    $stmt->bindValue(':user_id', $report->getUserId(), PDO::PARAM_INT);
+    $stmt->bindValue(':id', $report->getId(), PDO::PARAM_INT);
     $result = $stmt->execute();
     return $result;
   }

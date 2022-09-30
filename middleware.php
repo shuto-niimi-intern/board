@@ -6,6 +6,7 @@
  */
 
 use App\Board\Classes\exceptions\ErrorRenderer;
+use Slim\Middleware\MethodOverrideMiddleware;
 
 /**
  * ルーティング ミドルウェアは、ErrorMiddleware よりも前に追加する必要があります。
@@ -32,3 +33,12 @@ $errorMiddleware = $app->addErrorMiddleware(true, true, true);
  */
 $errorHandler = $errorMiddleware->getDefaultErrorHandler();
 $errorHandler->registerErrorRenderer("text/html", ErrorRenderer::class);
+
+
+/**
+ * メソッドオーバライドミドルウェア
+ * put patch deleteなどのリクエストメソッドを上書きするためのミドルウェア
+ * Add MethodOverride middleware
+ */
+$methodOverrideMiddleware = new MethodOverrideMiddleware();
+$app->add($methodOverrideMiddleware);

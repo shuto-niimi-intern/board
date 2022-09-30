@@ -1,20 +1,26 @@
 <?php
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use App\Board\Classes\middlewares\LoginCheck;
 use App\Board\Classes\controllers\ReportController;
 use App\Board\Classes\controllers\LoginController;
+use App\Board\Classes\controllers\UserController;
 
 // ログイン画面表示処理
-$app->get("/test", function (Request $request, Response $response, $args) {
-  $response->getBody()->write($_ENV['host']);
-  return $response;
-});
-
 $app->get("/", LoginController::class . ":goLogin");
 $app->post("/login", LoginController::class . ":login");
 $app->get("/logout", LoginController::class . ":logout");
+
+
+// userProfile表示処理
+$app->get('/user/profile', UserController::class . ":showProfile");
+// user作成画面処理
+$app->get("/user/goAdd", UserController::class . ":goAdd");
+// user登録処理
+$app->post("/user/add", UserController::class . ":add");
+// user編集画面処理
+$app->get('/user/prepareEdit', UserController::class . ':prepareEdit');
+// user更新処理
+$app->put('/user/edit', UserController::class . ':edit');
 
 
 // レポートリスト表示処理

@@ -1,10 +1,7 @@
 <?php
 
 /**
- * UserのDAO
- * @auther Syuto Niimi
- * name=UserDAO.php
- * dir=
+ * @author Syuto Niimi
  */
 
 namespace App\Board\Classes\daos;
@@ -32,12 +29,12 @@ class UserDAO
     $this->db = $db;
   }
   /**
-   * userIdによる検索。
+   * loginId && userIdによる検索。
    *
-   * @param int $userId userID 。
+   * @param string $userId userID 。
    * @return User 該当するUserオブジェクト。ただし、該当データがない場合はnull。
    */
-  public function findByUserId(int $userId): ?User
+  public function findByUserId(string $userId): ?User
   {
     $sql = "SELECT * FROM users WHERE id = :loginId";
     $stmt = $this->db->prepare($sql);
@@ -47,53 +44,17 @@ class UserDAO
     $user = null;
     if ($result && $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $id = $row["id"];
-      $us_mail = $row["us_mail"];
-      $us_name = $row["us_name"];
-      $us_password = $row["us_password"];
-      $us_auth = $row["us_auth"];
+      $name = $row["name"];
+      $password = $row["password"];
+      $auth = $row["auth"];
 
-      $user = new User();
-      $user->setId($id);
-      $user->setUsMail($us_mail);
-      $user->setUsName($us_name);
-      $user->setUsPassword($us_password);
-      $user->setUsAuth($us_auth);
+      $user = new User($id, $name, $password, $auth);
     }
     return $user;
   }
   /**
-   * メールアドレスによる検索。
-   *
-   * @param string $loginId ログインID (メルアド)。
-   * @return User 該当するUserオブジェクト。ただし、該当データがない場合はnull。
-   */
-  public function findByUsMail(string $loginId): ?User
-  {
-    $sql = "SELECT * FROM users WHERE us_mail = :loginId";
-    $stmt = $this->db->prepare($sql);
-
-    $stmt->bindValue(":loginId", $loginId, PDO::PARAM_STR);
-    $result = $stmt->execute();
-    $user = null;
-    if ($result && $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $id = $row["id"];
-      $us_mail = $row["us_mail"];
-      $us_name = $row["us_name"];
-      $us_password = $row["us_password"];
-      $us_auth = $row["us_auth"];
-
-      $user = new User();
-      $user->setId($id);
-      $user->setUsMail($us_mail);
-      $user->setUsName($us_name);
-      $user->setUsPassword($us_password);
-      $user->setUsAuth($us_auth);
-    }
-    return $user;
-  }
-  /**
+   * admin用
    * ユーザリスト全取得
-   *
    * @return User Userオブジェクト 該当なしの場合null
    */
   public function findAll(): array
@@ -103,12 +64,7 @@ class UserDAO
     $result = $stmt->execute();
     $UserList = [];
     while ($row = $stmt->fetch()) {
-      $User = new User();
-      $User->setId($row["id"]);
-      $User->setUsMail($row["us_mail"]);
-      $User->setUsName($row["us_name"]);
-      $User->setUsPassword($row["us_password"]);
-      $User->setUsAuth($row["us_auth"]);
+      $User = new User($row['id'], $row['name'], $row['password'], $row['auth']);
       $UserList[$row['id']] = $User;
     }
     return $UserList;
@@ -120,13 +76,13 @@ class UserDAO
    */
   public function insert(User $User): int
   {
-    $sqlInsert = "INSERT INTO Users (us_mail,us_name,us_password,us_auth) VALUES(:us_mail,:us_name,
-:us_password,:us_auth)";
+    $sqlInsert = "INSERT INTO users (id,name,password,auth) VALUES(:id,:name,
+:password,:auth)";
     $stmt = $this->db->prepare($sqlInsert);
-    $stmt->bindvalue('us_mail', $User->getUsMail(), PDO::PARAM_STR);
-    $stmt->bindvalue('us_name', $User->getUsName(), PDO::PARAM_STR);
-    $stmt->bindvalue('us_password', $User->getUsPassword(), PDO::PARAM_STR);
-    $stmt->bindvalue('us_auth', $User->getUsAuth(), PDO::PARAM_STR);
+    $stmt->bindValue(':id', $User->getId(), PDO::PARAM_STR);
+    $stmt->bindValue(':name', $User->getName(), PDO::PARAM_STR);
+    $stmt->bindValue(':password', $User->getPassword(), PDO::PARAM_STR);
+    $stmt->bindValue(':auth', $User->getAuth(), PDO::PARAM_INT);
     $result = $stmt->execute();
     if ($result) {
       $UserId = $this->db->lastInsertId();
@@ -142,12 +98,11 @@ class UserDAO
    */
   public function update(User $User): bool
   {
-    $sqlUpdate = " UPDATE Users SET us_mail = :us_mail , us_name = :us_name , us_password = :us_password , = :us_auth WHERE id = :id";
+    $sqlUpdate = " UPDATE users SET name = :name , password = :password WHERE id = :id";
     $stmt = $this->db->prepare($sqlUpdate);
-    $stmt->bindvalue('us_mail', $User->getUsMail(), PDO::PARAM_STR);
-    $stmt->bindvalue('us_name', $User->getUsName(), PDO::PARAM_STR);
-    $stmt->bindvalue('us_password', $User->getUsPassword(), PDO::PARAM_STR);
-    $stmt->bindvalue('us_auth', $User->getUsAuth(), PDO::PARAM_STR);
+    $stmt->bindValue('id', $User->getId(), PDO::PARAM_STR);
+    $stmt->bindValue('name', $User->getName(), PDO::PARAM_STR);
+    $stmt->bindValue('password', $User->getPassword(), PDO::PARAM_STR);
     $result = $stmt->execute();
     return $result;
   }
@@ -160,7 +115,7 @@ class UserDAO
   {
     $sql = "DELETE FROM Users WHERE id = :id";
     $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+    $stmt->bindValue(":id", $id, PDO::PARAM_STR);
     $result = $stmt->execute();
     return $result;
   }

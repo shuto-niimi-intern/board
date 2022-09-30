@@ -1,0 +1,50 @@
+{#
+ /**
+  * PH35 Sample14 マスタテーブル管理Slim版 Src25
+  * レポート削除確認画面。
+  *
+  * @author Shinzo SAITO
+  *
+  * ファイル名=deptConfirmDelete.php
+  * フォルダ=/ph35/scottadminslim/templates/dept/
+*/
+#}
+<!DOCTYPE html>
+<html lang="ja">
+  <meta charset="UTF-8">
+  <meta name="author" content="Shinzo SAITO">
+  <title>レポート削除 | Sample</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/dark.min.css">
+  <link rel="stylesheet" href="/css/main.css" type="text/css">
+  </head>
+  <body>
+    <h1>レポート情報削除</h1>
+    <nav id="breadcrumbs">
+      <p><span>{{ session.name }}さんこんにちは</span><a href="/logout">ログアウト</a></p>
+      <ul>
+        <li><a href="/reports/showList">レポートリスト</a></li>
+        <li><a href="/reports/showDetail/{{ report.id }}">レポート詳細画面</a></li>
+        <li>レポート情報削除</li>
+      </ul>
+    </nav>
+    <section>
+      <p> 以下のレポートを削除します。<br> よろしければ、削除ボタンをクリックしてください。 </p>
+      <dl>
+        <dt>レポート番号</dt>
+        <dd>{{ report.id }}</dd>
+        <dt>作業日</dt>
+        <dd>{{ report.rpDate }}</dd>
+        <dt>作業内容</dt>
+        <dd>
+          <pre>{{ report.rpContent|nl2br }}</pre>
+        </dd>
+        <dt>レポート登録日時</dt>
+        <dd>{{ report.rpCreatedAt }}</dd>
+      </dl>
+      <form action="/reports/delete/{{ report.id }}" method="post">
+        <input type="hidden" id="reportId" name="reportId" value="{{report.id}}">
+        <button type="submit">削除</button>
+      </form>
+    </section>
+  </body>
+</html>

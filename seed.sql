@@ -12,15 +12,14 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users
 (
 	id varchar(255) NOT NULL COMMENT 'ユーザID兼ログインID',
-  name varchar(255) DEFAULT 'マツコデラックス' COMMENT 'ハンドルネーム',
+  name varchar(255) DEFAULT 'マツコ・デラックス' COMMENT 'ハンドルネーム',
 	password varchar(255) NOT NULL COMMENT 'パスワード',
-	auth int(11) UNSIGNED DEFAULT 1 NOT NULL COMMENT '権限 : 0=終了
-1=管理者
-2=一般',
-created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	auth tinyint(11) UNSIGNED DEFAULT 1 NOT NULL COMMENT '権限 :
+0=管理者
+1=一般',
 	PRIMARY KEY (id)
 ) COMMENT = 'ユーザ';
 
 -- ユーザデータ挿入
 INSERT INTO users (id, password, auth) VALUES ('aiueo', 'pass', '1');
+

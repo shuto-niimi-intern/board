@@ -36,19 +36,14 @@ class UserDAO
    */
   public function findByUserId(string $userId): ?User
   {
-    $sql = "SELECT * FROM users WHERE id = :loginId";
+    $sql = "SELECT id,name,password,auth FROM users WHERE id = :loginId";
     $stmt = $this->db->prepare($sql);
 
     $stmt->bindValue(":loginId", $userId, PDO::PARAM_STR);
     $result = $stmt->execute();
     $user = null;
     if ($result && $row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $id = $row["id"];
-      $name = $row["name"];
-      $password = $row["password"];
-      $auth = $row["auth"];
-
-      $user = new User($id, $name, $password, $auth);
+      $user = new User($row['id'], $row['name'], $row['password'], $row['auth']);
     }
     return $user;
   }
@@ -59,7 +54,7 @@ class UserDAO
    */
   public function findAll(): array
   {
-    $sql = "SELECT * FROM users";
+    $sql = "SELECT id,name,password,auth FROM users";
     $stmt = $this->db->prepare($sql);
     $result = $stmt->execute();
     $UserList = [];
@@ -111,9 +106,9 @@ class UserDAO
    * @param integer ユーザID
    * @return boolean 登録が成功したかどうか
    */
-  public function delete(int $id): bool
+  public function delete(string $id): bool
   {
-    $sql = "DELETE FROM Users WHERE id = :id";
+    $sql = "DELETE FROM users WHERE id = :id";
     $stmt = $this->db->prepare($sql);
     $stmt->bindValue(":id", $id, PDO::PARAM_STR);
     $result = $stmt->execute();

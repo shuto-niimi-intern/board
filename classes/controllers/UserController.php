@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author Shinzo SAITO
+ * @author Syuto Niimi
  */
 
 namespace App\Board\Classes\controllers;
@@ -115,8 +115,7 @@ class UserController extends ParentController
       /**
        * 同じIDが存在するか
        */
-      $user = $userDAO->findByUserId($loginId);
-      if ($user === null) {
+      if ($userDAO->findByUserId($addId) === null) {
         if (empty($validationMsgs)) {
           $userId = $userDAO->insert($user);
           if ($userId === -1) {
@@ -130,7 +129,7 @@ class UserController extends ParentController
             $isRedirect = true;
             $this->flash->addMessage(
               "flashMsg",
-              "ユーザーID" . $userId . "でユーザー情報を登録しました。"
+              "ユーザーID" . $addId . "でユーザー情報を登録しました。"
             );
           }
         } else {
@@ -208,20 +207,18 @@ class UserController extends ParentController
       $val = str_replace([' ', '　'], "", $val);
       ${$key} = trim($val);
     }
-
     $user = new User($_SESSION['id'], $editName, $editPass, 1);
-
     /**
      * validate
      */
     $validationMsgs = [];
-    if (empty($addId)) {
+    if (empty($editName)) {
       $validationMsgs[] = "IDの入力は必須です。";
     }
-    if (empty($addPass)) {
+    if (empty($editPass)) {
       $validationMsgs[] = "パスワードの入力は必須です。";
     }
-    if (mb_strlen($addId) !== 5 || !ctype_alpha($addId)) {
+    if (mb_strlen($editName) !== 5 || !ctype_alpha($editName)) {
       $validationMsgs[] = 'IDは英語の5文字で設定してください。';
     }
 
@@ -257,7 +254,7 @@ class UserController extends ParentController
     if ($isRedirect) {
       $returnResponse = $response->withStatus(302)->withHeader(
         "Location",
-        "/users/showProfile" . $user->getId()
+        "/user/profile"
       );
     } else {
       $returnResponse = $this->view->render($response, $templatePath, $assign);
@@ -273,27 +270,27 @@ class UserController extends ParentController
     ResponseInterface $response,
     array $args
   ): ResponseInterface {
-    $templatePath = "report/reportConfirmDelete.html";
+    $templatePath = "/user/userConfirmDelete.html";
     $assign = [];
 
-    $reportId = $args["id"];
-    try {
-      $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
-      $reportDAO = new reportDAO($db);
-      $report = $reportDAO->findByReportId($reportId);
-      if (empty($report)) {
-        throw new DataAccessException("レポート情報の取得に失敗しました。");
-      } else {
-        $assign["report"] = $report;
-      }
-    } catch (PDOException $ex) {
-      $exCode = $ex->getCode();
-      throw new DataAccessException("DB接続に失敗しました。", $exCode, $ex);
-    } finally {
-      $db = null;
-    }
+    // try {
+    //   $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
+    //   $userDAO = new userDAO($db);
+    //   $user = $userDAO->findByUserId($_SESSION['id']);
+    //   if (empty($user)) {
+    //     throw new DataAccessException("ユーザー情報の取得に失敗しました。");
+    //   } else {
+    //     $assign["user"] = $user;
+    //   }
+    // } catch (PDOException $ex) {
+    //   $exCode = $ex->getCode();
+    //   throw new DataAccessException("DB接続に失敗しました。", $exCode, $ex);
+    // } finally {
+    //   $db = null;
+    // }
     // ログイン情報
     $assign['session'] = $_SESSION;
+    // var_dump($assign);
     $returnResponse = $this->view->render($response, $templatePath, $assign);
     return $returnResponse;
   }
@@ -304,14 +301,16 @@ class UserController extends ParentController
   public function delete(ServerRequestInterface $request, ResponseInterface
   $response, array $args): ResponseInterface
   {
+    $deleteId = $_SESSION['id'];
     try {
       $db = new PDO('mysql:host=' . $_ENV['host'] . ';dbname=' . $_ENV['dbname'] . ';charset=utf8', $_ENV['user'], $_ENV['pass']);
-      $reportDAO = new reportDAO($db);
-      $result = $reportDAO->delete($args['id']);
+      $userDAO = new userDAO($db);
+      $result = $userDAO->delete($deleteId);
       if ($result) {
+        session_destroy();
         $this->flash->addMessage(
           "flashMsg",
-          "レポートID" . $args['id'] . "のユーザー情報を削除しました。"
+          "ユーザーID" . $deleteId . "のユーザー情報を削除しました。"
         );
       } else {
         throw new
@@ -324,10 +323,9 @@ class UserController extends ParentController
       $db = null;
     }
     // ログイン情報
-    $assign['session'] = $_SESSION;
     $returnResponse = $response->withStatus(302)->withHeader(
       "Location",
-      "/reports/showList"
+      "/"
     );
     return $returnResponse;
   }

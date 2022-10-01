@@ -21,6 +21,10 @@ $app->post("/user/add", UserController::class . ":add");
 $app->get('/user/prepareEdit', UserController::class . ':prepareEdit');
 // user更新処理
 $app->put('/user/edit', UserController::class . ':edit');
+// user削除準備処理
+$app->get('/user/confirmDelete', UserController::class . ':confirmDelete');
+// user削除処理
+$app->delete('/user/delete', UserController::class . ':delete');
 
 
 // レポートリスト表示処理

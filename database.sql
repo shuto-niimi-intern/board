@@ -66,7 +66,8 @@ ALTER TABLE reports
 	ON DELETE CASCADE
 ;
 
-
+--- トランザクション開始
+BEGIN;
 -- ユーザデータ挿入
 INSERT INTO users (us_mail, us_name, us_password, us_auth) VALUES ('architshin@websarva.com', '齊藤新三', '$2y$10$nOq4TsTceUB91d/X3oLseOjD2RuFhjJceQDE1zK904Pklsag5bO0u', '1');
 
@@ -77,3 +78,6 @@ INSERT INTO reportcates (rc_name, rc_note, rc_list_flg, rc_order) VALUES ('資�
 INSERT INTO reportcates (rc_name, rc_note, rc_list_flg, rc_order) VALUES ('顧客対応', '', '1', '4');
 INSERT INTO reportcates (rc_name, rc_note, rc_list_flg, rc_order) VALUES ('設計', '', '1', '5');
 INSERT INTO reportcates (rc_name, rc_note, rc_list_flg, rc_order) VALUES ('その他', '', '1', '6');
+
+--- コミット
+COMMIT;

@@ -28,7 +28,8 @@ CREATE TABLE res
   id int(11) NOT NULL AUTO_INCREMENT COMMENT 'コメントかレスID',
   content text NOT NULL COMMENT '本文',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '投稿日時',
-	user_id varchar(255) NOT NULL COMMENT 'ユーザID兼ログインID',
+　updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+　user_id varchar(255) NOT NULL COMMENT 'ユーザID兼ログインID',
   res_id int(11) UNSIGNED NOT NULL COMMENT 'レス先ID : 0=コメント id=レス',
   PRIMARY KEY (id)
 ) COMMENT = '掲示板';
@@ -46,6 +47,7 @@ ALTER TABLE res ADD INDEX user_id_index (user_id);
 
 -- トランザクション開始
 BEGIN;
+
 -- ユーザデータ挿入
 INSERT INTO users (id, password, auth) VALUES ('aiueo', 'pass', '1');
 INSERT INTO users (id, password, auth) VALUES ('apple', 'pass', '1');

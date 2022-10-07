@@ -1,7 +1,7 @@
 --
 -- テーブル作成、データ登録SQLファイル
 -- adminユーザで使用
--- コマンド: mysql -u admin -p board --default-character-set=utf8 < "./seed.sql"
+-- コマンド: mysql -u admin -p board --default-character-set=utf8mb4 < "./seed.sql"
 --
 -- @author Syuto Niimi
 

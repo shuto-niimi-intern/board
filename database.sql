@@ -1,7 +1,7 @@
 --
 -- テーブル作成、データ登録SQLファイル
 -- adminユーザで使用
--- コマンド: mysql -u  -p board --default-character-set=utf8 < "/…/database.sql"
+-- コマンド: mysql -u  -p board --default-character-set=utf8mb4 < "/…/database.sql"
 --
 -- @author Syuto Niimi
 
